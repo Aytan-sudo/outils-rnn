@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prédiction du succès d'extubation — Outils RNN</title>
-<meta name="description" content="Probabilité d'échec d'extubation estimée à partir de l'âge gestationnel et du pH (modèle de régression logistique).">
+<meta name="description" content="Probabilité d'échec d'extubation estimée à partir du terme de naissance et du pH pré-extubation (modèle de régression logistique).">
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍼</text></svg>">
 <script src="../assets/js/theme.js"></script>
@@ -40,7 +40,7 @@
     <p class="lead">
       Estimation de la probabilité d'<strong>échec d'extubation</strong> à partir du
       terme de naissance et du pH pré-extubation, selon le modèle de régression
-      logistique issu de la thèse de M<sup>me</sup> Murgue.
+      logistique issu du travail de M<sup>me</sup> Murgue.
     </p>
   </div>
 
@@ -80,7 +80,7 @@
       </div>
 
       <div style="margin-top:24px; display:flex; gap:10px; flex-wrap:wrap">
-        <button class="btn" type="button" id="btn-copy">
+        <button class="btn btn--primary" type="button" id="btn-copy">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>
           </svg>
@@ -93,7 +93,7 @@
     <!-- =========================== Résultats =========================== -->
     <div class="stack">
 
-      <section class="card result" aria-live="polite">
+      <section class="card result" id="result-card" data-level="good" aria-live="polite">
         <div class="result__head">
           <div>
             <p class="hero__label">Probabilité d'échec d'extubation</p>
@@ -108,8 +108,15 @@
         <div>
           <div class="meter">
             <div class="meter__fill" id="out-meter" data-level="good" style="width:0%"></div>
+            <span class="meter__tick" style="left:20%"></span>
+            <span class="meter__tick" style="left:50%"></span>
           </div>
-          <div class="meter-scale"><span>0 %</span><span>50 %</span><span>100 %</span></div>
+          <div class="meter-scale">
+            <span class="at-start">0 %</span>
+            <span style="left:20%">20 %</span>
+            <span style="left:50%">50 %</span>
+            <span class="at-end">100 %</span>
+          </div>
         </div>
 
         <div>
@@ -129,7 +136,7 @@
           <figure class="chart" style="margin:0">
             <figcaption>
               <span class="chart__title">Probabilité d'échec selon le pH</span>
-              <span class="chart__sub" id="chart-ph-sub">à âge gestationnel constant</span>
+              <span class="chart__sub" id="chart-ph-sub">à terme de naissance constant</span>
             </figcaption>
             <div class="chart__figure">
               <svg class="chart__svg" id="chart-ph" viewBox="0 0 460 250" role="img" aria-label="Courbe de la probabilité d'échec en fonction du pH"></svg>
@@ -179,7 +186,7 @@
         </svg>
         <div class="prose">
           <p>
-            <strong>Source.</strong> Modèle de régression logistique issu de la thèse de
+            <strong>Source.</strong> Modèle de régression logistique issu du travail de
             M<sup>me</sup> Murgue : <em>logit(p) = 71,58 − 0,748 × ÂG(SA) − 7,29 × pH</em>,
             la probabilité d'échec étant obtenue par <em>p = 1 / (1 + e<sup>−logit</sup>)</em>.
           </p>
@@ -209,7 +216,7 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <p>Cantais et al. — Service de Réanimation Néonatale, CHU de Saint-Étienne.</p>
+    <p class="credit">Cantais et al. — Service de Réanimation Néonatale, CHU de Saint-Étienne.</p>
     <p>Outils d'aide à la décision : ils ne remplacent pas le jugement clinique.</p>
   </div>
 </footer>

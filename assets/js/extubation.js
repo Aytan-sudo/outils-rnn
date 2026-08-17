@@ -1,6 +1,6 @@
 /* =============================================================================
    Prédiction du succès d'extubation
-   Modèle de régression logistique (thèse de Mme Murgue) :
+   Modèle de régression logistique (travail de Mme Murgue) :
        logit(p) = 71,58 − 0,748 × ÂG(SA) − 7,29 × pH
        p        = 1 / (1 + e^−logit)          → p = probabilité d'ÉCHEC
    Tout le calcul est local : rien n'est transmis ni enregistré.
@@ -61,6 +61,7 @@
 
   function makeChart(svg, tip) {
     var cfg = null;
+    var gradId = 'area-' + svg.id;
 
     function sx(x) { return M.left + (x - cfg.xMin) / (cfg.xMax - cfg.xMin) * PLOT_W; }
     function sy(p) { return M.top + (1 - p) * PLOT_H; }
@@ -96,7 +97,10 @@
                    '" text-anchor="end" dominant-baseline="middle">' + (p * 100) + '</text>');
       });
 
-      parts.push('<path class="area" d="' + area.join(' ') + '"/>');
+      parts.push('<defs><linearGradient id="' + gradId + '" x1="0" y1="0" x2="0" y2="1">' +
+                 '<stop class="stop-top" offset="0"/><stop class="stop-bot" offset="1"/>' +
+                 '</linearGradient></defs>');
+      parts.push('<path class="area" fill="url(#' + gradId + ')" d="' + area.join(' ') + '"/>');
       parts.push('<path class="line" d="' + line.join(' ') + '"/>');
 
       /* Axe des abscisses */
@@ -183,6 +187,7 @@
   var els = {
     gaWeeks: $('ga-weeks'), gaDays: $('ga-days'), gaRange: $('ga-range'), gaWarn: $('ga-warn'),
     ph: $('ph'), phRange: $('ph-range'), phWarn: $('ph-warn'),
+    card: $('result-card'),
     prob: $('out-prob'), success: $('out-success'), meter: $('out-meter'),
     badge: $('out-badge'), badgeIcon: $('badge-icon'), badgeText: $('badge-text'),
     steps: $('steps'), tablePh: $('table-ph'),
@@ -215,6 +220,7 @@
 
     els.meter.style.width = (p * 100).toFixed(2) + '%';
     els.meter.setAttribute('data-level', lvl.key);
+    els.card.setAttribute('data-level', lvl.key);
     els.badge.setAttribute('data-level', lvl.key);
     els.badgeIcon.innerHTML = lvl.icon;
     els.badgeText.textContent = lvl.label;
@@ -387,7 +393,7 @@
       " (" + num(ga, 2) + " SA), pH pré-extubation " + num(state.ph, 2) +
       " : probabilité d'échec " + pct(p, 1) +
       " (succès " + pct(1 - p, 1) + ").\n" +
-      "Modèle : logit(p) = 71,58 − 0,748 × ÂG(SA) − 7,29 × pH (thèse Murgue). " +
+      "Modèle : logit(p) = 71,58 − 0,748 × ÂG(SA) − 7,29 × pH (travail de Mme Murgue). " +
       "Aide à la décision, ne remplace pas le jugement clinique.";
 
     function done(ok) {

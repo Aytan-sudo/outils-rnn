@@ -9,7 +9,7 @@ aucune donnée saisie n'est transmise ni enregistrée.
 
 | Outil | Fichier | Description |
 |---|---|---|
-| Prédiction du succès d'extubation | `outils/extubation.html` | Probabilité d'échec d'extubation à partir du **terme de naissance** (SA) et du **pH pré-extubation**. Modèle logistique issu de la thèse de M<sup>me</sup> Murgue : `logit(p) = 71,58 − 0,748 × ÂG(SA) − 7,29 × pH`, `p = 1 / (1 + e^−logit)`. |
+| Prédiction du succès d'extubation | `outils/extubation.html` | Probabilité d'échec d'extubation à partir du **terme de naissance** (SA) et du **pH pré-extubation**. Modèle logistique issu du travail de M<sup>me</sup> Murgue : `logit(p) = 71,58 − 0,748 × ÂG(SA) − 7,29 × pH`, `p = 1 / (1 + e^−logit)`. |
 
 ## Structure
 
